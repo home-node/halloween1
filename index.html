@@ -237,7 +237,7 @@
         //buy
         async function buy() {
             const batch = parseInt(document.getElementById('batch').value);
-            if (batch > pop) {
+            if (batch > pop && batch > 1) {
                 messageBox.className = "negative";
                 messageBox.innerText = "Error:\namount exceeds population";
                 return;
