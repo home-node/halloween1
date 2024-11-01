@@ -170,6 +170,11 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
 				"internalType": "string",
 				"name": "",
 				"type": "string"
@@ -179,7 +184,7 @@
 		"type": "function"
 	}
 ];
-        const contractAddress = '0x59522186aDf61023019fA12368aae7F52F367447';
+        const contractAddress = '0x1BE1Dae43A24d9EF7990B4a0A536b202beb9745d';
         const web3 = new Web3(new Web3.providers.HttpProvider('https://polygon-mainnet.infura.io/v3/d625808bbdc24dd4844b5315cee1a3ba'));
         const contract = new web3.eth.Contract(contractABI, contractAddress);
         const messageBox = document.getElementById('message-box');
@@ -188,7 +193,7 @@
         //build
         async function build() {
             messageBox.className = "positive";
-            messageBox.innerText = "🥚 to purchase a batch\n↻ to refresh\nctrl+f and paste your address\nto find your clutch";
+            messageBox.innerText = "🥚 to purchase a batch for " + w + "POL\n↻ to refresh\nctrl+f and paste your address\nto find your clutch";
             document.getElementById('batch').value = 1;
             const result = await contract.methods.fetch().call();
             b = {
@@ -197,9 +202,10 @@
                 s: result[0].map(item => item.s)
             };
             v = result[1];
-            z = result[2];
-            q = result[3];
-            n = result[4];
+            w = result[2];
+            z = result[3];
+            q = result[4];
+            n = result[5];
             t = Math.floor(Date.now() / 1000);
             rot()
             dep = b.s[0];
@@ -248,7 +254,7 @@
                     to: contractAddress,
                     from: accounts[0],
                     value: web3.utils.toHex(web3.utils.toWei(batch.toString(), 'ether')),
-                    data: contract.methods.batch(batch).encodeABI()
+                    data: contract.methods.batch(batch * w).encodeABI()
                 };
                 await ethereum.request({
                     method: 'eth_sendTransaction',
